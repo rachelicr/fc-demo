@@ -6,10 +6,12 @@ Knows about MCP and calls gmail_client — contains no raw Gmail API calls.
 """
 
 import json
+import os
 
 import mcp.types as types
 
 from gmail_mcp.gmail_client import (
+    BASE_DIR,
     get_gmail_service,
     fetch_messages,
     create_draft_reply,
@@ -116,6 +118,19 @@ TOOL_DEFINITIONS = [
             "required": ["to", "subject", "body"],
         },
     ),
+    types.Tool(
+    name="get_tone_guidelines",
+    description=(
+        "Fetches the tone and style guidelines for writing emails. "
+        "Always call this before drafting or replying to any email to ensure "
+        "the writing style is appropriate."
+    ),
+    inputSchema={
+        "type": "object",
+        "properties": {},
+        "required": [],
+    },
+),
 ]
 
 # ── Tool handlers ─────────────────────────────────────────────────────────────
@@ -134,6 +149,12 @@ async def handle_tool_call(name: str, arguments: dict) -> list[types.TextContent
 
     if name == "create_new_draft":
         return await _create_new_draft(arguments)
+
+    if name == "create_new_draft":
+        return await _create_new_draft(arguments)
+
+    if name == "get_tone_guidelines":
+        return await _get_tone_guidelines(arguments)
 
     raise ValueError(f"Unknown tool: {name}")
 
@@ -209,3 +230,9 @@ async def _create_new_draft(arguments: dict) -> list[types.TextContent]:
             ),
         )
     ]
+
+async def _get_tone_guidelines(arguments: dict) -> list[types.TextContent]:
+    guidelines_path = os.path.join(BASE_DIR, "context", "tone_guidelines.md")
+    with open(guidelines_path, "r") as f:
+        content = f.read()
+    return [types.TextContent(type="text", text=content)]
