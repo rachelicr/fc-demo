@@ -34,6 +34,13 @@ Run from the project root:
 python -m tests.smoke_test
 ```
 
+## test_sanity.py
+This runs in CI and can be run from the command line like:
+```bash
+python -m pytest tests/test_sanity.py -v
+```
+
+
 Note: the smoke test will create a real draft in your Gmail inbox as part of
 check 4. You can safely delete it afterwards.
 
