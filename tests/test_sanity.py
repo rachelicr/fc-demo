@@ -4,8 +4,14 @@ tests/test_sanity.py
 Lightweight pytest checks that verify the project is correctly structured
 and configured. Makes no API calls and creates no drafts.
 
-Run with:
+Tests marked @pytest.mark.local_only require credentials.json and token.json
+which are not in the repo — these are skipped in CI automatically.
+
+Run all tests locally:
     python -m pytest tests/test_sanity.py -v
+
+Run only CI-safe tests:
+    python -m pytest tests/test_sanity.py -v -m "not local_only"
 """
 
 import os
@@ -13,15 +19,20 @@ import pytest
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# True when running in CI — used to skip tests that need local credentials
+IN_CI = os.environ.get("CI") == "true"
+
 
 # ── File structure ────────────────────────────────────────────────────────────
 
+@pytest.mark.skipif(IN_CI, reason="credentials.json not available in CI")
 def test_credentials_file_exists():
     """credentials.json must be present in the project root."""
     assert os.path.exists(os.path.join(BASE_DIR, "credentials.json")), \
         "credentials.json not found — download it from Google Cloud Console"
 
 
+@pytest.mark.skipif(IN_CI, reason="token.json not available in CI")
 def test_token_file_exists():
     """token.json must be present — run python -m tests.test_auth to generate it."""
     assert os.path.exists(os.path.join(BASE_DIR, "token.json")), \

@@ -26,4 +26,4 @@ jobs:
 
       - name: Run sanity checks (CI-safe tests only)
         run: |
-          python -m pytest tests/test_sanity.py -v -m "not local_only"
+          python -m pytest tests/test_sanity.py -v
