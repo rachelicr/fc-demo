@@ -1,3 +1,4 @@
 credentials.json
 token.json
-x.vscode/*
+.vscode/*
+gmail_mcp/x__pycache__/*
