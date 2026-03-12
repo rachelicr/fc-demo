@@ -1,0 +1,12 @@
+name: gmail-mcp
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - mcp
+    - google-auth
+    - google-auth-oauthlib
+    - google-auth-httplib2
+    - google-api-python-client
