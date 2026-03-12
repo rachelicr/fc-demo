@@ -74,7 +74,7 @@ On WSL copy the printed URL into your Windows browser. After granting access,
 python -m tests.smoke_test
 ```
 
-All five checks should pass before proceeding.
+All six checks should pass before proceeding.
 
 </details>
 
@@ -143,6 +143,8 @@ Restart Claude Desktop after editing. A hammer icon may appear but the best chec
 ![alt text](images/image-3.png)
 ![alt text](images/image-4.png)
 ![alt text](images/image-5.png)
+![alt text](images/image-6.png)
+![alt text](images/image-7.png)
 
 ## Known Limitations
 1. In order to include the ability to use both recent and unread emails Claude needs the descrptions well speciied, I included the advise to use the recent emails for a summary rather than unread.
@@ -176,5 +178,26 @@ python -m tests.smoke_test
 Run after any significant change to verify the whole stack works before 
 restarting Claude Desktop. All five checks should pass.
 
-## Stretch Goals (Not Implemented)
+---  
+
+## Stretch Goals
+
+The spec suggested enhancing the server by pulling in external context to help 
+Claude write better replies. This has been implemented using a local markdown 
+file rather than Google Docs or Notion, which keeps the project self-contained 
+and avoids additional API credentials. Google Docs would require an additional OAuth scope (`documents.readonly`), 
+re-authentication, and a new API client module. For tone guidelines that are 
+edited occasionally, a local markdown file is simpler, more transparent, and 
+easier to version control alongside the code.
+
+### Tone Guidelines
+
+A `context/tone_guidelines.md` file provides Claude with tone and style rules 
+that are applied automatically before any email is drafted. The file can be 
+edited without touching any code.
+
+The `get_tone_guidelines` tool reads this file and returns its contents. The 
+tool description instructs Claude to always fetch the guidelines before drafting, 
+so the behaviour is automatic — you do not need to ask Claude to apply them.
+
 

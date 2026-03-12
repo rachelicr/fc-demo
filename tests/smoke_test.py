@@ -114,5 +114,12 @@ try:
 except Exception as e:
     failed(f"Could not load tool definitions: {e}")
 
+section("6. Checking tone guidelines...")
+guidelines_path = os.path.join(BASE_DIR, "context", "tone_guidelines.md")
+if os.path.exists(guidelines_path):
+    passed("tone_guidelines.md found")
+else:
+    failed("tone_guidelines.md not found in context/")
+
 
 print("\n✓ All checks passed — server should work correctly with Claude Desktop.\n")

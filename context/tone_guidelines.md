@@ -4,4 +4,4 @@ Tone Guidelines
 - Avoid jargon
 - Always acknowledge the sender's point before responding
 - Use a warm but not overly casual tone
-- Sign off with "Best regards"
+- Always sign off with "Warm regards"
